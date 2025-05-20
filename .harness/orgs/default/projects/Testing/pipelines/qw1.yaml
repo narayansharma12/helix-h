@@ -59,7 +59,7 @@ pipeline:
         spec:
           deploymentType: Kubernetes
           service:
-            serviceRef: kubernetes_service
+            serviceRef: new_service
           environment:
             environmentRef: iat
             gitBranch: main
