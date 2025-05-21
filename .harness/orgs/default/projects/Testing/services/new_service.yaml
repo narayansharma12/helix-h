@@ -27,7 +27,7 @@ service:
             - spec:
                 connectorRef: New_docker_connector
                 imagePath: narayansharma12/helix:latest
-                tag: <+input>
+                tagRegex: <+input>.regex(latest)
                 digest: ""
               identifier: dockerArti
               type: DockerRegistry
