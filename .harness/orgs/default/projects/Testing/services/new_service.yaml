@@ -3,3 +3,32 @@ service:
   identifier: new_service
   orgIdentifier: default
   projectIdentifier: Testing
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: harness
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: account.helix_github_harness
+                  gitFetchType: Branch
+                  paths:
+                    - deployment.yaml
+                  branch: main
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: New_docker_connector
+                imagePath: narayansharma12/helix:latest
+                tag: <+input>
+                digest: ""
+              identifier: dockerArti
+              type: DockerRegistry
+    type: Kubernetes
