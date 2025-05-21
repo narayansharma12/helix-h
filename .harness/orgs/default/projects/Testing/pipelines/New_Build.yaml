@@ -1,0 +1,52 @@
+pipeline:
+  name: New_Build
+  identifier: New_Build
+  projectIdentifier: Testing
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.helix_github_harness
+        build: <+input>
+  stages:
+    - stage:
+        name: qw1
+        identifier: qw1
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: New_kubernetes_connector
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: GitClone
+                  name: GitClone_1
+                  identifier: GitClone_1
+                  spec:
+                    connectorRef: account.helix_github_harness
+                    build:
+                      type: branch
+                      spec:
+                        branch: main
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: New_docker_connector
+                    repo: narayansharma12/helix
+                    tags:
+                      - latest
+                    caching: true
