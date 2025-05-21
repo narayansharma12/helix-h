@@ -57,8 +57,6 @@ pipeline:
         type: Deployment
         spec:
           deploymentType: Kubernetes
-          service:
-            serviceRef: new_service
           environment:
             environmentRef: ppd
             deployToAll: false
@@ -82,6 +80,11 @@ pipeline:
                   timeout: 10m
                   spec:
                     pruningEnabled: false
+          services:
+            values:
+              - serviceRef: new_service
+            metadata:
+              parallel: false
         tags: {}
         failureStrategies:
           - onFailure:
