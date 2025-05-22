@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: helix
-        image: babu710/helix:latest
+        image: narayansharma12/helix:latest
         ports:
         - containerPort: 8080
 ---
