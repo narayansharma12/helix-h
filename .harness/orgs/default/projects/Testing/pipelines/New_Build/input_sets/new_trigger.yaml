@@ -1,0 +1,32 @@
+inputSet:
+  name: new_trigger
+  identifier: new_trigger
+  orgIdentifier: default
+  projectIdentifier: Testing
+  pipeline:
+    identifier: New_Build
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
+    stages:
+      - stage:
+          identifier: deploy_test
+          type: Deployment
+          spec:
+            service:
+              serviceInputs:
+                serviceDefinition:
+                  type: Kubernetes
+                  spec:
+                    artifacts:
+                      primary:
+                        primaryArtifactRef: dockerArti
+                        sources:
+                          - identifier: dockerArti
+                            type: DockerRegistry
+                            spec:
+                              tagRegex: latest
